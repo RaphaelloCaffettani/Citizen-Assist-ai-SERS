@@ -3,7 +3,6 @@
 **Global Solution | Ciência da Computação — 1CC**  
 **Disciplina:** Soluções em Energias Renováveis e Sustentáveis  
 **Integrantes:** Lucca Bertolini - RM 569552
-
 Raphaello Caffettani - RM 572334
 
 
