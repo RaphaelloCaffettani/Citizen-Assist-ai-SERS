@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulador e assistente sobre consumo elétrico residencial, lâmpadas LED e energia solar.">
+  <title>Citizen Assist AI | Energia Inteligente</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="container topbar"><a class="marca" href="#inicio"><span class="simbolo">⚡</span> Citizen Assist <strong>AI</strong></a><a class="linktopo" href="#sobre">Sobre o projeto</a></div>
+  </header>
+  <main id="inicio">
+    <section class="hero container">
+      <div class="etiqueta">GLOBAL SOLUTION · ENERGIA E SUSTENTABILIDADE</div>
+      <h1>Entenda seu consumo.<br><span>Escolha como economizar.</span></h1>
+      <p>Uma ferramenta educativa para comparar os gastos da iluminação residencial, a troca por LED e a energia solar fotovoltaica.</p>
+      <a href="#simulacao" class="botao">Começar simulação <span aria-hidden="true">→</span></a>
+      <p class="aviso">Os valores iniciais são estimativas didáticas, não uma medição da sua residência.</p>
+    </section>
+    <section id="simulacao" class="container secao">
+      <div class="cabecalho"><div><div class="mini">ETAPA 01</div><h2>Dados da residência</h2><p>Altere os valores para representar o seu caso. O exemplo inicial é hipotético.</p></div></div>
+      <form class="painel" id="simulador">
+        <div class="form-grid">
+          <label>Quantidade de lâmpadas <input id="lampadas" type="number" min="0" max="1000" step="1" required></label>
+          <label>Potência atual (W) <input id="potenciaAtual" type="number" min="0" max="5000" step="1" required></label>
+          <label>Potência LED (W) <input id="potenciaLed" type="number" min="0" max="5000" step="1" required></label>
+          <label>Horas de uso por dia <input id="horasDia" type="number" min="0" max="24" step="0.5" required></label>
+          <label>Dias por mês <input id="diasMes" type="number" min="1" max="31" step="1" required></label>
+          <label>Tarifa ilustrativa (R$/kWh) <input id="tarifa" type="number" min="0" step="0.01" required></label>
+        </div>
+        <details><summary>Ver ou alterar os custos e as hipóteses da energia solar</summary>
+          <div class="form-grid detalhes">
+            <label>Preço por lâmpada LED (R$) <input id="custoLed" type="number" min="0" step="0.01" required></label>
+            <label>Sistema solar (kWp) <input id="solarKwp" type="number" min="0" step="0.1" required></label>
+            <label>Produção (kWh/kWp/mês) <input id="produtividadeSolar" type="number" min="0" step="1" required></label>
+            <label>Investimento solar (R$) <input id="custoSolar" type="number" min="0" step="1" required></label>
+            <label>Fator econômico de compensação (0 a 1) <input id="fatorCompensacao" type="number" min="0" max="1" step="0.05" required></label>
+          </div>
+        </details>
+        <div class="acoes"><button type="submit" class="botao">Atualizar análise</button><button id="restaurar" type="button" class="botao secundario">Restaurar exemplo</button></div>
+        <p id="erro" role="alert" class="erro"></p>
+      </form>
+    </section>
+    <section id="resultados" class="container secao">
+      <div class="mini">ETAPA 02</div><h2>Comparação de alternativas</h2>
+      <p id="explicacao" class="subtexto"></p>
+      <div class="cartoes">
+        <article class="cartao"><div class="tag cinza">CENÁRIO ATUAL</div><h3>Iluminação existente</h3><p>Consumo mensal</p><strong id="consumo" class="numero">—</strong><p>Custo mensal estimado</p><strong id="custoAtual" class="valor">—</strong><small>Referência para comparar as duas alternativas.</small></article>
+        <article class="cartao destaque"><div class="tag verde">ALTERNATIVA 01</div><h3>Troca por LED</h3><p>Consumo mensal</p><strong id="consumoLed" class="numero">—</strong><p>Economia financeira/mês</p><strong id="economiaLed" class="valor">—</strong><small>Redução do consumo: <b id="reducaoLed">—</b>. Custo mensal: <b id="custoLedMensal">—</b>.</small><small>Investimento: <b id="investimentoLed">—</b> · Retorno: <b id="retornoLed">—</b>.</small></article>
+        <article class="cartao"><div class="tag azul">ALTERNATIVA 02 · RENOVÁVEL</div><h3>Energia solar</h3><p>Geração mensal hipotética</p><strong id="geracaoSolar" class="numero">—</strong><p>Economia financeira/mês</p><strong id="economiaSolar" class="valor">—</strong><small>Custo residual ilustrativo: <b id="custoSolarMensal">—</b>.</small><small>Retorno simples: <b id="retornoSolar">—</b> (antes de taxas e outros custos).</small></article>
+      </div>
+      <div class="painel graficos"><h3>Comparação do custo mensal ilustrativo</h3><div class="grafico"><span>Atual</span><div class="trilho"><div id="barraAtual" class="barra atual"></div></div><b id="labelAtual">Base</b></div><div class="grafico"><span>LED</span><div class="trilho"><div id="barraLed" class="barra led"></div></div><b>Menor consumo</b></div><div class="grafico"><span>Solar</span><div class="trilho"><div id="barraSolar" class="barra solar"></div></div><b>Compensação</b></div><p class="nota">Solar não reduz o consumo físico: o modelo só representa possível compensação financeira da energia gerada.</p></div>
+      <div class="painel recomendacao"><h3>💡 Orientação para o cenário</h3><p id="recomendacao"></p></div>
+    </section>
+    <section id="assistente" class="container secao">
+      <div class="mini">ETAPA 03</div><h2>Pergunte ao assistente</h2><p class="subtexto">As respostas são baseadas nos cálculos acima. Não é um chat com IA generativa nem consulta dados externos.</p>
+      <div class="duas-colunas"><div class="painel"><h3>Perguntas rápidas</h3><div class="perguntas"><button type="button" data-pergunta="Como foi calculado o consumo?">Como foi calculado o consumo?</button><button type="button" data-pergunta="Vale mais a pena trocar por LED?">Qual alternativa vale mais a pena?</button><button type="button" data-pergunta="Como funciona a energia solar?">Como funciona a energia solar?</button><button type="button" data-pergunta="Quais são os riscos e as limitações?">Quais são as limitações?</button></div></div>
+      <div class="painel chat"><div id="mensagens" aria-live="polite" aria-label="Mensagens do assistente"></div><form id="perguntaForm" class="inputchat"><label class="sr-only" for="pergunta">Digite sua pergunta</label><input id="pergunta" type="text" placeholder="Digite uma pergunta sobre energia..." maxlength="180" required><button type="submit">Enviar</button></form></div></div>
+    </section>
+    <section id="sobre" class="container secao sobre"><div class="mini">INFORMAÇÃO RESPONSÁVEL</div><h2>Referências e limites</h2><div class="duas-colunas"><div><h3>O que foi considerado</h3><p>Quantidade de lâmpadas, potência, tempo de uso, tarifa suposta, preços hipotéticos e geração solar ilustrativa. O período de referência é um mês.</p></div><div><h3>O que exige validação real</h3><p>Conta da distribuidora, preço de equipamentos, avaliação do telhado, irradiação do local, tributos, disponibilidade de crédito e regras de compensação. O impacto ambiental depende da vida útil e do descarte dos equipamentos.</p></div></div><p class="fontes">Consulte <a href="docs/analise_energetica.md">a análise técnica</a>, <a href="docs/referencias.md">as fontes verificáveis</a> e <a href="docs/testes.md">os registros de testes</a>.</p></section>
+  </main>
+  <footer><div class="container"><strong>Citizen Assist AI · Energia Inteligente</strong><span>Global Solution · Ciência da Computação</span></div></footer>
+  <script src="data/premissas.js"></script><script src="assets/app.js"></script>
+</body>
+</html>
